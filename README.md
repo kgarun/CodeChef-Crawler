@@ -14,10 +14,10 @@
  
  <p><b>Requirements:</b></p>
  <ul>
- <li>Python3 or greater</li>
- <li>Requests</li>
- <li>lxml</li>
- <li>bs4</li>
+ <li><a href="https://www.python.org/downloads/"> >=Python3 </a> </li>
+ <li><a href="http://docs.python-requests.org/en/master/user/install/">Requests</a></li>
+ <li><a href="http://lxml.de/installation.html">lxml</a></li>
+ <li><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">bs4</a></li>
  </ul>
  
  <hr>
