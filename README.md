@@ -3,6 +3,7 @@
 <p><b>Usage:</b></p>
 <ul>
 <li>Clone the repository and extract the files</li>
+<li>Please install all the requirements mentioned below</li>
 <li>Run the script
 <br><b>eg: python3 crawl.py username password  </b>    //    To download your submissions from <b>ongoing contests</b> <br>
     (or) just type <b>python3 crawl.py</b></li>
