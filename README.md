@@ -7,7 +7,7 @@
 <li>Run the script
 <br><b>eg: python3 crawl.py username password  </b>    //    To download your submissions from <b>ongoing contests</b> <br>
     (or) just type <b>python3 crawl.py username</b></li>
- <li>Then type the codechef username of the user whose sucessful submissions are to be downloaded</li>
+ <li>Then the download process starts.If the download process is interrupted,please run the script again</li>
  
  </ul>
  
