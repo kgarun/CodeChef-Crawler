@@ -144,11 +144,9 @@ if __name__ == "__main__":
                 )
 
 
-        #Obtaining Username
+        #Obtaining Username and Opening user profile
 
-        print("Enter codechef username of the user whose submissions are to be downloaded: ",end=" ")
-
-        username = input()     
+        username = os.sys.argv[1]     
 
         url="https://www.codechef.com/users/" + username
 
