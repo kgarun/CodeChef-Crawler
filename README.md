@@ -37,8 +37,8 @@
  
  <p><b>Note:</b></p>
  <ol>
- <li>Username and Password are not necessary to download problems that are publicly available.You can download successful submissions of <b>any user</b> by just entering their codechef username</li>
- <li>To download <b>your</b> ongoing contest submissions or submissions that are not publicly available ,Username and Password  not necessary</li>
+ <li>Password is not necessary to download problems that are publicly available.You can download successful submissions of <b>any user</b> by just entering their codechef username</li>
+ <li>To download <b>your</b> ongoing contest submissions or submissions that are not publicly available  Password   is necessary</li>
  <li>Download process may be terminated due to http error (like 503).In such case,run script after sometime and download resumes from the previous point</li>
  
       
