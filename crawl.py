@@ -1,11 +1,10 @@
-#Importing Dependencies
+"""Downloads the Publicly available submissions of any codechef user.
+   Private submissions can also be downloaded by provinding login credentials."""
 
 import requests
 from lxml import html
 from bs4 import BeautifulSoup
-import os
-
-
+import os,sys,traceback
 
 
 #Establishing session
@@ -17,9 +16,6 @@ login_url = "https://www.codechef.com/"
 result = session_requests.get(login_url)
 
 
-
-
-
 #Obtaining Authenticity_token
 
 tree = html.fromstring(result.text)
@@ -29,42 +25,43 @@ authenticity_token = list(set(tree.xpath("//input[@name='form_build_id']/@value"
 
 
 
-
-
-
-
-# This Functions takes an url as input and returns parsed html 
-
 def parse_html(url,logout=0):
+    """ Parses HTML of the Given URL.
+    
+    Args:
+            url = URL of the webpage(str)
 
-        try:
+    Returns:
+            Parsed HTML of the give URL
+    """
 
-            result = session_requests.get( url,  headers = {"referer":login_url,'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}  )
+    try:
 
-            if logout==0:
+        result = session_requests.get( url,  headers = {"referer":login_url,'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}  )
 
-                raw_html=result.content
+        if logout == 0:
 
-                soup = BeautifulSoup(raw_html,"lxml")
+            raw_html=result.content
 
-                return soup
+            soup = BeautifulSoup(raw_html,"lxml")
 
-        except requests.HTTPError  as e: 
+            return soup
+
+    except requests.HTTPError  as e: 
 
             print("request exception",e)
 
 
 
-
-
-
-
-
-#Create Folder and Store file:
-
 Directory_Changed = False
 
 def file_handling(file_name,contents,count):  
+    """ Creates new file and updates log file.
+    Args:
+        file_name = Name of the file with suitable extension (str)
+        contents = Contents to be Written onto the file (str)
+        count = Specifies the number of files successfully downloaded
+    """
 
     if os.path.isfile(file_name) ==  False:
 
@@ -86,14 +83,14 @@ def file_handling(file_name,contents,count):
 
 
 
-
-
-
-# This Function prints user details
-
 def print_user_details(name,rating,numsolved):
+    """Prints User Details.
+    name = Name(or ID) of the User
+    rating = Current rating of the user
+    numsolved = Number of problems solved by the user
+    """
 
-    print("User Name: ",User)
+    print("User Name: ",name)
 
     print("User Rating: ",rating)
 
@@ -102,22 +99,26 @@ def print_user_details(name,rating,numsolved):
 
 
 
+def main(userhandle,pwd=None):
+    """ Main function of the module.It crawls the user profile page and downloads successful submissions
+        made by the user in appropiate file format.
+    
+    Command-line Args: 
+        argv[1] = userhandle(compulsory)
+        argv[2] = password(optional)
 
+    """
 
-
-#Main Function
-
-if __name__ == "__main__":
 
     try:
 
-        if len(os.sys.argv) > 2:
+        if pwd!=None:
 
                 #Obtaining CodeChef Account Details
 
-                username = os.sys.argv[1]
+                username = userhandle
 
-                password = os.sys.argv[2]
+                password = pwd
 
 
                 #Creating Payload to be Submitted
@@ -127,8 +128,7 @@ if __name__ == "__main__":
                     "pass": password, 
                     "form_build_id": authenticity_token,
                     "form_id":"new_login_form"
-                }
-        
+                }       
         
 
                 #Posting necessary info to login
@@ -146,16 +146,14 @@ if __name__ == "__main__":
 
         #Obtaining Username and Opening user profile
 
-        username = os.sys.argv[1]     
+        username = userhandle    
 
         url="https://www.codechef.com/users/" + username
-
 
 
         #Parsing  Codechef profile of the User
     
         soup = parse_html(url)
-
 
         #Creating a new Directory to store files 
 
@@ -164,6 +162,8 @@ if __name__ == "__main__":
             os.makedirs(username)
 
         #Changing current directory to the created directory
+
+        global Directory_Changed
 
         if Directory_Changed == False:
             
@@ -179,9 +179,7 @@ if __name__ == "__main__":
 
                  log.write("0")
 
-                 log.close()            
-
-
+                 log.close()         
 
 
         #Obtaining User Name ,Rating,Number of Problems Solved
@@ -290,20 +288,12 @@ if __name__ == "__main__":
 
                 log.write(str(count))
 
-                log.close()  
-
-
-    
+                log.close()      
 
 
         print("Downloaded ",Files_Downloaded,"files successfully :)")
 
-
         parse_html('https://www.codechef.com/logout',1)
-
-
-
-
 
    
     except KeyboardInterrupt:
@@ -323,14 +313,19 @@ if __name__ == "__main__":
         print("\n")
 
     except:
+        #For debugging purpose
+        
+        #print(traceback.print_exc()) 
 
         print("Some Error Occurred :( \nPlease Try again after sometime")
 
         parse_html('https://www.codechef.com/logout',1)
 
 
+if __name__ == "__main__":
 
+    if len(sys.argv) > 2:
+        main(sys.argv[1],os.sys.argv[2])
 
-
-
-
+    else:
+        main(sys.argv[1])
